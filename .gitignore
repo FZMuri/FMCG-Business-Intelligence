@@ -1,0 +1,29 @@
+
+# Raw source data - download separately
+01_Data/Raw/*
+
+# Generated and processed data
+01_Data/Processed/*
+01_Data/Reference/*
+
+# Keep folder structures in Git
+!01_Data/Raw/.gitkeep
+!01_Data/Processed/.gitkeep
+!01_Data/Reference/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Power BI temporary/cache files
+**/.pbi/cache.abf
+**/.pbi/localSettings.json
+*.pbix
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
