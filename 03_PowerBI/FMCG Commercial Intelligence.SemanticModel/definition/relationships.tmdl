@@ -1,0 +1,20 @@
+relationship AutoDetected_9a415d11-89ba-494b-a0ae-75e4ecbfd86f
+	fromColumn: fact_sales.date_key
+	toColumn: dim_date.date_key
+
+relationship AutoDetected_bdafd90b-a736-4bc8-a352-2b96993b02dd
+	fromColumn: fact_sales.product_key
+	toColumn: dim_product.product_key
+
+relationship AutoDetected_a3a526dd-b957-49f8-8e0a-10d896fed454
+	fromColumn: fact_sales.channel_key
+	toColumn: dim_channel.channel_key
+
+relationship AutoDetected_3bdc5f11-54c2-4586-b2d1-205376d8fd62
+	fromColumn: fact_sales.region_key
+	toColumn: dim_region.region_key
+
+relationship AutoDetected_02f02e2d-ea68-457f-a2e8-67e556e03dc1
+	fromColumn: fact_sales.pack_type_key
+	toColumn: dim_pack_type.pack_type_key
+

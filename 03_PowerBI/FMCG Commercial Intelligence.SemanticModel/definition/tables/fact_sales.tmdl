@@ -1,0 +1,156 @@
+table fact_sales
+	lineageTag: 0ca40c9d-f9d1-4a20-bce7-1cf4c078c596
+
+	/// Sum of fact_sales[units_sold] across the current filter context. Assumes units_sold is an additive quantity at the fact_sales row grain.
+	measure 'Total Units Sold' = SUM(fact_sales[units_sold])
+		formatString: #,##0
+		lineageTag: 25e6a928-7d60-452e-a7cd-c66bc3466002
+
+	/// Sum of fact_sales[estimated_sales_value] across the current filter context. Represents the source-provided estimated sales value; currency and accounting treatment are unconfirmed, so no currency symbol is implied.
+	measure 'Estimated Sales Value' = SUM(fact_sales[estimated_sales_value])
+		formatString: #,##0.00
+		lineageTag: 4ea911f4-f2ea-46f3-9c5d-22729ca271db
+
+	/// Estimated Sales Value divided by Total Units Sold in the current filter context. Returns blank when Total Units Sold is zero or blank. No currency unit is implied because the source currency is unconfirmed.
+	measure 'Average Selling Price' = DIVIDE([Estimated Sales Value], [Total Units Sold])
+		formatString: #,##0.00
+		lineageTag: 0b180468-8440-41a2-a733-abf7d55c0159
+
+	column date_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 735b8a59-91ab-45db-a091-85d71ecf1230
+		summarizeBy: none
+		sourceColumn: date_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column product_key
+		dataType: int64
+		formatString: 0
+		lineageTag: f36b165f-39a4-44b0-8fe3-9f23d33c7c0e
+		summarizeBy: none
+		sourceColumn: product_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column channel_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 63c8f249-d75d-4e4e-bbeb-7fa922fba1b1
+		summarizeBy: none
+		sourceColumn: channel_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column region_key
+		dataType: int64
+		formatString: 0
+		lineageTag: 3aaa3263-5355-4970-bf63-2eacf3b657d4
+		summarizeBy: none
+		sourceColumn: region_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column pack_type_key
+		dataType: int64
+		formatString: 0
+		lineageTag: ea0ed0e9-ea44-4743-9b27-3ade08f1375d
+		summarizeBy: none
+		sourceColumn: pack_type_key
+
+		annotation SummarizationSetBy = Automatic
+
+	column units_sold
+		dataType: int64
+		formatString: 0
+		lineageTag: cf10eab8-ecf3-4269-87c9-c40490f13696
+		summarizeBy: sum
+		sourceColumn: units_sold
+
+		annotation SummarizationSetBy = Automatic
+
+	column unit_price
+		dataType: double
+		lineageTag: 171e4e3c-c2f2-491a-906c-cb78cea32a3e
+		summarizeBy: sum
+		sourceColumn: unit_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estimated_sales_value
+		dataType: double
+		lineageTag: fe69197b-9121-4820-94e2-75c8cfb1b8e5
+		summarizeBy: sum
+		sourceColumn: estimated_sales_value
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column delivered_qty
+		dataType: int64
+		formatString: 0
+		lineageTag: 734dec2e-6f35-41ae-b570-74257b67254f
+		summarizeBy: sum
+		sourceColumn: delivered_qty
+
+		annotation SummarizationSetBy = Automatic
+
+	column stock_available
+		dataType: int64
+		formatString: 0
+		lineageTag: 8eadc513-33a9-4fe7-ba6d-3b170f476cab
+		summarizeBy: sum
+		sourceColumn: stock_available
+
+		annotation SummarizationSetBy = Automatic
+
+	column delivery_days
+		dataType: int64
+		formatString: 0
+		lineageTag: d1d16864-ccef-43ac-aec1-f091ad6bd6e1
+		summarizeBy: sum
+		sourceColumn: delivery_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column promotion_flag
+		dataType: int64
+		formatString: 0
+		lineageTag: 73b9a263-6761-4a92-8180-902e828e1456
+		summarizeBy: sum
+		sourceColumn: promotion_flag
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_negative_quantity_exception
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 01559972-4e97-4d5c-a148-8a457ab68def
+		summarizeBy: none
+		sourceColumn: is_negative_quantity_exception
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_potential_stockout
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 3bd2a6ed-014e-4039-97b9-bf37375002ff
+		summarizeBy: none
+		sourceColumn: is_potential_stockout
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_sales = m
+		mode: import
+		source =
+				let
+				    Source = Parquet.Document(File.Contents("C:\Users\Administrator\Documents\FMCG Business Intelligence\01_Data\Processed\PowerBI\fact_sales.parquet"), [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+				in
+				    Source
+
+	annotation PBI_ResultType = Table
+

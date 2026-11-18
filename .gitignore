@@ -19,9 +19,11 @@ venv/
 .env
 
 # Power BI temporary/cache files
-**/.pbi/cache.abf
-**/.pbi/localSettings.json
+# Power BI generated and local files
 *.pbix
+**/.pbi/
+**/cache.abf
+**/localSettings.json
 
 # OS and editor files
 .DS_Store
