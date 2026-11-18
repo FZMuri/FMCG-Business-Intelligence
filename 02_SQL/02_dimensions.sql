@@ -65,7 +65,7 @@ SELECT
     DAY(calendar_date) AS day_of_month,
     DAYOFWEEK(calendar_date) AS day_of_week_number
 FROM generate_series(
-    (SELECT MIN(sales_date) FROM stg_sales),
-    (SELECT MAX(sales_date) FROM stg_sales),
+    DATE '2022-01-01',
+    DATE '2024-12-31',
     INTERVAL 1 DAY
-) AS dates(calendar_date);
+) AS calendar(calendar_date)
